@@ -12,6 +12,8 @@ def main():
     if len(sys.argv) < 2:
         raise ValueError("No version provided")
     version = sys.argv[1]
+    version_triple = version[1:].split(".")
+    print(version_triple)
     data = {}
     if (Path.cwd() / filename).exists():
         with open(filename, "r") as f:
@@ -28,18 +30,29 @@ def main():
     }
     item = {}
     for system in systems:
-        url = f"https://github.com/kristoff-it/superhtml/releases/download/{version}/{system}.tar.gz"
+        url = ""
+        # Older versions used tar.gz
+        if int(version_triple[0]) <= 0 and int(version_triple[1]) <= 5:
+            url = f"https://github.com/kristoff-it/superhtml/releases/download/{version}/{system}.tar.gz"
+        else:
+            if "linux" in system:
+                url = f"https://github.com/kristoff-it/superhtml/releases/download/{version}/{system}.tar.xz"
+            if "macos" in system:
+                url = f"https://github.com/kristoff-it/superhtml/releases/download/{version}/{system}.zip"
         prefetch_hash_output = subprocess.run(
             ["nix-prefetch-url", f"{url}"], capture_output=True
         )
-        prefetch_hash = prefetch_hash_output.stdout.decode("utf-8").strip("\n")
-        print(f"Hash {prefetch_hash} for system {system}")
-        res = {}
-        res["hash"] = prefetch_hash
-        res["version"] = version
-        res["url"] = url
-        res["downloaded-system"] = system
-        item[systems[system]] = res
+        if prefetch_hash_output.returncode == 0:
+            prefetch_hash = prefetch_hash_output.stdout.decode("utf-8").strip("\n")
+            print(f"Hash {prefetch_hash} for system {system}")
+            res = {}
+            res["hash"] = prefetch_hash
+            res["version"] = version
+            res["url"] = url
+            res["downloaded-system"] = system
+            item[systems[system]] = res
+        else:
+            print(f"Warning: Could not fetch hash for system {system}, skipping")
     outs[version] = item
 
     with open(filename, "w") as f:

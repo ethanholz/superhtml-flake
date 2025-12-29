@@ -3,12 +3,13 @@
   system ? builtins.currentSystem,
 }: let
   inherit (pkgs) lib;
+  unzip = pkgs.unzip;
   sources = builtins.fromJSON (builtins.readFile ./superhtml.json);
   mkBinaryInstall = {
     url,
     version,
     hash,
-    downloaded-system
+    downloaded-system,
   }:
     pkgs.stdenvNoCC.mkDerivation {
       name = "superhtml-${version}";
@@ -18,11 +19,15 @@
         sha256 = hash;
       };
       unpackPhase = ''
-        tar -xzf $src
+        case "$src" in
+          *.tar.xz) tar -xJf $src ;;
+          *.tar.gz) tar -xzf $src ;;
+          *.zip)    ${unzip}/bin/unzip $src ;;
+        esac
       '';
       installPhase = ''
         mkdir -p $out/bin/
-        cp ${downloaded-system}/superhtml $out/bin
+        cp superhtml $out/bin
       '';
     };
   tagged =
