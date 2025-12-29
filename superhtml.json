@@ -1,4 +1,30 @@
 {
+  "v0.6.2": {
+    "x86_64-linux": {
+      "hash": "1qrn19ywwxksrjf2v2p0ff4ivc9grrp0h01qhhjvjvrx4bb0ppg6",
+      "version": "v0.6.2",
+      "url": "https://github.com/kristoff-it/superhtml/releases/download/v0.6.2/x86_64-linux-musl.tar.xz",
+      "downloaded-system": "x86_64-linux-musl"
+    },
+    "aarch64-linux": {
+      "hash": "15i8lr35bijapq582qls87hgl5pcnp0l2fh0wbjg944j18n6f89d",
+      "version": "v0.6.2",
+      "url": "https://github.com/kristoff-it/superhtml/releases/download/v0.6.2/aarch64-linux.tar.xz",
+      "downloaded-system": "aarch64-linux"
+    },
+    "x86_64-darwin": {
+      "hash": "0qn7v56n6752sz5jg5vmdrsimbkq30p89njwfscw5acha352lk56",
+      "version": "v0.6.2",
+      "url": "https://github.com/kristoff-it/superhtml/releases/download/v0.6.2/x86_64-macos.zip",
+      "downloaded-system": "x86_64-macos"
+    },
+    "aarch64-darwin": {
+      "hash": "0pdmybiyr27rhjqjhmkdiyd2skz5nsilbkmdcjvaghkvibyrfyw1",
+      "version": "v0.6.2",
+      "url": "https://github.com/kristoff-it/superhtml/releases/download/v0.6.2/aarch64-macos.zip",
+      "downloaded-system": "aarch64-macos"
+    }
+  },
   "v0.6.1": {
     "x86_64-linux": {
       "hash": "1ph8whd225hiia1dv822mhgpdi1lgq6qhjdk91d9v7wpkqcksyxf",
